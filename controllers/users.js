@@ -22,3 +22,7 @@ exports.checkUser = function* (next) {
 exports.delUser = function* (next) {
 
 };
+
+exports.notifications = function* (next) {
+
+};

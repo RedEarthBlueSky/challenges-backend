@@ -4,20 +4,26 @@ const mongoose = require('mongoose');
 const relationship = require('mongoose-relationship');
 
 const submissionSchema = new mongoose.Schema ({
-  authorId: String,       //  author id from users
-  authorName: String,         //  author will be user from users
-  challengeId: String,
+  id:number,
+  feed:String,                //  where does this - feed - come from?
+  authorId: String,           //  author id from user
+  authorName: String,         //  author will be user from user
+  challengeTypeId: String,
   challengeTitle: String,
   description:String,[{
     type: mongoose.Schema.ObjectId,
     ref: 'Description',
-    childPath: 'challenges'
+    childPath: 'submissions'
   }],
   comment: String,
   totalSubmitted: String,
   created_at:String,
   captureURL:String,
-  videoURL:String
+  videoURL:String,
+  challengedUsers: [{userId:string, status:string},
+    {userId:string, status:string},
+    {userId:string, status:string}
+  ]
 });
 
 module.exports = mongoose.model('Submission', submissionSchema );
