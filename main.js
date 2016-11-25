@@ -20,8 +20,20 @@ app.use(bodyParser());
 
 app.use( function *() {
   this.body = 'We have some challenges for you!';
-});
+})
 
-app.listen(config.port, function () {
-  console.log('Challenges server listening on port ' + config.port);
-});
+
+db.connection.on('error', (err) => {
+  console.log(`Error connecting to ${config.dbname} with error: ${err}`);
+})
+
+db.connection.once('open', () => {
+  console.log(`Connected to ${config.dbname} db with Mongoose`);
+  app.listen(config.port, () => {
+    console.log(`Challenges server listening on port ${config.port}`);
+  });
+})
+
+db.connection.on('disconnected', () => {
+  console.log(`Mongoose disconnected from ${config.dbname}`);
+})
