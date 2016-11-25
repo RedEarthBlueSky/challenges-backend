@@ -1,0 +1,9 @@
+{
+		"hostname": "localhost",
+		"port": "3000",
+		"dbname": "challenges",
+		"dbhostname": "localhost",
+		"dbport": "27017",
+		"dbuser": "",
+		"dbpassword": ""
+}
