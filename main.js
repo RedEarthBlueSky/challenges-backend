@@ -16,7 +16,7 @@ const app = koa();
 
 app.use(cors());
 app.use(bodyParser());
-// app.use(router.routes());
+app.use(router.routes());
 
 app.use( function *() {
   this.body = 'We have some challenges for you!';
