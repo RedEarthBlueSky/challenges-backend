@@ -35,7 +35,7 @@ exports.getSpecificChallenge = function* (next) {
 };
 
 exports.postChallenge = function* (next) {
-
+  const that = this.request.body;
 };
 
 exports.mostPopularChallenge = function* (next) {
