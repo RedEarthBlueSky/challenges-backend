@@ -5,22 +5,22 @@ const uuid = require('uuid');
 const bcrypt = require('bcrypt');
 const parse = require('co-body');
 
-const accessToken = 'EAAYCbbWRYZAYBAGoN1ZAnCDXd4q2F1pMB2BBfmQqSZBwZAprJIpWH18FFUxiU4MibegafgfrmXKf5Xwhz9XXZC6ttAuoxV1cNgaUjqsmvt5GZBVRrtEE1XZBubJZCWLl8j7WKWj68zDThLIW1hCBMlrLFV4BbZAAcKldr1bsExk65xI4UphAcNOBTVa2fSzs3EdKCbvPZB3jZBZA1VWTnTt8DnPt';
-const appSecret = 'd3643b4fd48d1eae846420a7afe2cc17';
-const appId = 'd3643b4fd48d1eae846420a7afe2cc17';
-const apiURL = 'me?fields=id,first_name,last_name,picture';
+const loadConfig = require('./load-config');
+let fbOptions = loadConfig.DEFAULTS;
 
 const FB = require('fb');
-let promise = FB
-let fb = FB.extend({appId, appSecret});
-fb.setAccessToken(accessToken);
+let promise = FB;
+const fb = FB.extend({appId: fbOptions.appId, appSecret: fbOptions.appSecret});
 
 const User = require('../models').models.User;
 
 exports.login = function* (next) {
   let ctx = this;
+
+  fb.setAccessToken(this.request.body.fbToken);
+
   let p1 = new Promise(function(resolve, reject){
-    fb.api(apiURL, function(res){
+    fb.api(fbOptions.apiURL, function(res){
       if (!res || res.error) {
         console.log(!res ? 'error occurred' : res.error);
         reject(res.error);
@@ -30,20 +30,40 @@ exports.login = function* (next) {
   });
   yield p1
     .then((data) => {
-      console.log(data);
+      //  does this user already exist
+      //  if not create User
+      //  respond user data from database
+      let newToken = uuid.v4();
       ctx.status = 200;
-      ctx.body = data;
+      ctx.body =  {
+                  fbId: data.id,
+                  firstName: data.first_name,
+                  lastName: data.last_name,
+                  picture: data.picture.data.url,
+                  email:data.email,
+                  authToken:newToken
+                  };
     })
     .catch((err) => {
-      console.log(err);
+      console.log('An error has returned: ' + err);
     });
 };
 
-exports.createUser = function* (next) {
-
+let checkUser = function* (next, id, ctx) {
+  User.findOne({fbId: data.id}, function (err, id) {
+    if (error) {
+      colsole.log('MongoDB Error: ' + err);
+    }
+    if (!id) {
+      console.log("No item found, creating tracksTable item");
+      //  call create user here
+    } else {
+      console.log("Found a user " + User.fbId);
+    }
+  });
 };
 
-exports.checkUser = function* (next) {
+let createUser = function* (next) {
 
 };
 
