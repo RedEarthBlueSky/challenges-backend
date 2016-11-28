@@ -36,19 +36,46 @@ exports.login = function* (next) {
   .catch((err) => {
     console.log('An error has returned: ' + err);
   });
-  console.log(fbData);
-  yield User.findOne({ 'profileInfo.fbId': fbData.id })
+  let unknownId = 'shlkjsflsfjfjwoe';
+  yield User.findOne({ 'profileInfo.fbId': unknownId })
+  // yield User.findOne({ 'profileInfo.fbId': fbData.id })
     .then((user)=>{
-      ctx.status = 200;
-      ctx.body = {
-        fbToken: user.fbToken,
-        authToken: user.authToken,
-        fbId:user.profileInfo.fbId,
-        firstName:user.profileInfo.firstName,
-        lastName:user.profileInfo.lastName,
-        picture:user.profileInfo.picture,
-        email:user.profileInfo.email
-      };
+      if (user !== null) {
+        ctx.status = 200;
+        ctx.body = {
+          fbToken: user.fbToken,
+          authToken: user.authToken,
+          fbId:user.profileInfo.fbId,
+          firstName:user.profileInfo.firstName,
+          lastName:user.profileInfo.lastName,
+          picture:user.profileInfo.picture,
+          email:user.profileInfo.email
+        };
+      } else {
+        console.log(unknownId);
+        console.log('User is not in the database we need to create...');
+        ctx.body = fbData;
+        let newToken = uuid.v4();
+        let newDocument = {
+          fbToken:'1234',     // fbToken
+          authToken:newToken,
+          profileInfo: {
+            fbId: unknownId,            // fbData.id
+            firstName:'Percy',       // fbData.first_name
+            lastName:'Jackson',        // fbData.last_name
+            picture:'Lightening Thief Image',         // fbData.picture.data.url
+            email:'zues@pj.com'           // fbData.email
+          }
+        }
+        let newUser = new User(newDocument);
+        newUser.save(function (err) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log('New user save to db');
+          }
+        })
+      }
     })
     .catch((err) => {console.log(err);});
 };
