@@ -3,14 +3,14 @@
 const router = require('koa-router')();
 const bodyParser = require('body-parser');
 
-const usersCtrl = require('./controllers/users.js')
+const usersCtrl = require('./controllers/users.js');
 const submissionsCtrl = require('./controllers/submissions.js');
 const challengesCtrl = require('./controllers/challenges.js');
 
-router.get('/sign-in', usersCtrl.login);
-router.post('/users', usersCtrl.createUser);
+router.post('/sign-in/facebook', usersCtrl.login);
+// router.post('/users', usersCtrl.createUser);
 router.get('/users/:notification', usersCtrl.notifications);
-router.get('/me',usersCtrl.checkUser);
+// router.get('/me',usersCtrl.checkUser);
 router.del('/me',usersCtrl.delUser);
 
 router.get('submissions/:feed', submissionsCtrl.getFeed);
