@@ -29,16 +29,16 @@ exports.login = function* (next) {
       resolve(res);
     });
   });
+
   let fbData = yield p1
     .then((data) => {
       return data;
-  })
-  .catch((err) => {
-    console.log('An error has returned: ' + err);
+    })
+    .catch((err) => {
+      console.log('An error has returned: ' + err);
   });
-  let unknownId = 'shlkjsflsfjfjwoe';
-  yield User.findOne({ 'profileInfo.fbId': unknownId })
-  // yield User.findOne({ 'profileInfo.fbId': fbData.id })
+
+  yield User.findOne({ 'profileInfo.fbId': fbData.id })
     .then((user)=>{
       if (user !== null) {
         ctx.status = 200;
@@ -51,36 +51,40 @@ exports.login = function* (next) {
           picture:user.profileInfo.picture,
           email:user.profileInfo.email
         };
-      } else {
-        console.log(unknownId);
-        console.log('User is not in the database we need to create...');
-        ctx.body = fbData;
-        let newToken = uuid.v4();
-        let newDocument = {
-          fbToken:'1234',     // fbToken
-          authToken:newToken,
-          profileInfo: {
-            fbId: unknownId,            // fbData.id
-            firstName:'Percy',       // fbData.first_name
-            lastName:'Jackson',        // fbData.last_name
-            picture:'Lightening Thief Image',         // fbData.picture.data.url
-            email:'zues@pj.com'           // fbData.email
-          }
-        }
-        let newUser = new User(newDocument);
-        newUser.save(function (err) {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log('New user save to db');
-          }
-        })
       }
+    }).then((user)=>{
+      console.log('User is not in the database we need to create...');
+      let newToken = uuid.v4();
+      let newDocument = {
+        fbToken:'1234',     // fbToken
+        authToken:newToken,
+        profileInfo: {
+          fbId: fbData.id,            // fbData.id
+          firstName:'Percy',       // fbData.first_name
+          lastName:'Jackson',        // fbData.last_name
+          picture:'Lightening Thief Image',         // fbData.picture.data.url
+          email:'zues@pj.com'           // fbData.email
+        }
+      }
+
+      //  convert to a promise
+      let newUser = new User(newDocument);
+      newUser.save();
+      console.log('New user has been created!');
+      ctx.body = {
+        fbToken: newUser.fbToken,
+        authToken: newUser.authToken,
+        fbId:newUser.profileInfo.fbId,
+        firstName:newUser.profileInfo.firstName,
+        lastName:newUser.profileInfo.lastName,
+        picture:newUser.profileInfo.picture,
+        email:newUser.profileInfo.email
+      };
     })
     .catch((err) => {console.log(err);});
 };
 
-let checkUser = function* (next, id, ctx) {
+let checkUser = function (next) {
 
 };
 

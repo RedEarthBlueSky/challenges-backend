@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+mongoose.promise = global.promise;
 
 const eventSchema = new mongoose.Schema({
   "fbToken": { type: String, index: { unique: true }},
