@@ -8,16 +8,13 @@ const challengeSchema = new mongoose.Schema ({
   authorName: String,         //  author will be user from users
   challengeId: String,
   challengeTitle: String,
-  description:String,[{
-    type: mongoose.Schema.ObjectId,
-    ref: 'Description',
-    childPath: 'challenges'
-  }],
+  description:String,
   comment: String,
   totalSubmitted: String,
+  totalChallenged:String,
   created_at:String,
   captureURL:String,
-  videoURL:String,
+  imageURL:String,
   popularity:Number
 });
 
