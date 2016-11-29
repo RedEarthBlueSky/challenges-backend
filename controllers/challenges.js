@@ -9,9 +9,7 @@ exports.getChallenges = function* (next) {
   try {
     const challenges = yield Challenge.find();
       this.status = 200;
-      this.body = {
-        challenges: challenges
-      };
+      this.body = challenges;
 
   } catch (err) {
     this.status = 401;
