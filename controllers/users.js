@@ -16,7 +16,7 @@ const User = require('../models').models.User;
 
 exports.login = function* (next) {
   let ctx = this;
-
+  console.log(this.request.body);
   let fbToken = this.request.body.fbToken;
   fb.setAccessToken(fbToken);
 
@@ -35,6 +35,8 @@ exports.login = function* (next) {
       return data;
     })
     .catch((err) => {
+      ctx.status = 401;
+      ctx.body = { error: "Token not valid."};
       console.log('An error has returned: ' + err);
   });
 
@@ -53,6 +55,7 @@ exports.login = function* (next) {
         };
       }
     }).then((user)=>{
+      console.log(user);
       console.log('User is not in the database we need to create...');
       let newToken = uuid.v4();
       let newDocument = {
@@ -71,6 +74,7 @@ exports.login = function* (next) {
       let newUser = new User(newDocument);
       newUser.save();
       console.log('New user has been created!');
+      ctx.status = 200;
       ctx.body = {
         fbToken: newUser.fbToken,
         authToken: newUser.authToken,
@@ -81,7 +85,9 @@ exports.login = function* (next) {
         email:newUser.profileInfo.email
       };
     })
-    .catch((err) => {console.log(err);});
+    .catch((err) => {
+      console.log('Error creating or accessing user*:' + err);
+    });
 };
 
 let checkUser = function (next) {
