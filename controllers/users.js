@@ -14,9 +14,20 @@ const fb = FB.extend({appId: fbOptions.appId, appSecret: fbOptions.appSecret});
 
 const User = require('../models').models.User;
 
+let serializeUser = (user) => {
+  return {
+    fbToken: user.fbToken,
+    authToken: user.authToken,
+    fbId:user.profileInfo.fbId,
+    firstName:user.profileInfo.firstName,
+    lastName:user.profileInfo.lastName,
+    picture:user.profileInfo.picture,
+    email:user.profileInfo.email
+  }
+}
+
 exports.login = function* (next) {
   let ctx = this;
-  console.log(this.request.body);
   let fbToken = this.request.body.fbToken;
   fb.setAccessToken(fbToken);
 
@@ -41,8 +52,8 @@ exports.login = function* (next) {
   });
 
   yield User.findOne({ 'profileInfo.fbId': fbData.id })
-    .then((user)=>{
-      if (user !== null) {
+    .then(( user ) => {
+      if ( user !== null ) {
         ctx.status = 200;
         ctx.body = serializeUser(user);
       }
@@ -73,28 +84,19 @@ exports.login = function* (next) {
     });
 };
 
-let serializeUser = (user) => {
-  return {
-    fbToken: user.fbToken,
-    authToken: user.authToken,
-    fbId:user.profileInfo.fbId,
-    firstName:user.profileInfo.firstName,
-    lastName:user.profileInfo.lastName,
-    picture:user.profileInfo.picture,
-    email:user.profileInfo.email
-  }
-};
-
-let checkUser = function (next) {
-
-};
-
-let createUser = function* (next) {
-
-};
-
-exports.delUser = function* (next) {
-
+exports.checkUser = function* (next) {
+  let ctx = this;
+  let body = yield this.request.body;
+  yield User.findOne({ 'authToken': body.authToken })
+    .then((user) => {
+      if (user !== null) {
+        ctx.status = 200;
+        ctx.body = serializeUser(user);
+      }
+    })
+    .catch((err) => {
+      console.log('Error checking user*:' + err);
+  });
 };
 
 exports.notifications = function* (next) {
