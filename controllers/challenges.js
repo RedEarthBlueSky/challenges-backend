@@ -71,8 +71,6 @@ exports.getSpecificChallenge = function* (next) {
   }
 };
 
-
-
 exports.mostPopularChallenge = function* (next) {
 
 };

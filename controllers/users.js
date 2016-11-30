@@ -14,6 +14,18 @@ const fb = FB.extend({appId: fbOptions.appId, appSecret: fbOptions.appSecret});
 
 const User = require('../models').models.User;
 
+let serializeUser = (user) => {
+  return {
+    fbToken: user.fbToken,
+    authToken: user.authToken,
+    fbId:user.profileInfo.fbId,
+    firstName:user.profileInfo.firstName,
+    lastName:user.profileInfo.lastName,
+    picture:user.profileInfo.picture,
+    email:user.profileInfo.email
+  }
+}
+
 exports.login = function* (next) {
   let ctx = this;
   console.log(this.request.body);
@@ -44,46 +56,29 @@ exports.login = function* (next) {
     .then((user)=>{
       if (user !== null) {
         ctx.status = 200;
-        ctx.body = {
-          fbToken: user.fbToken,
-          authToken: user.authToken,
-          fbId:user.profileInfo.fbId,
-          firstName:user.profileInfo.firstName,
-          lastName:user.profileInfo.lastName,
-          picture:user.profileInfo.picture,
-          email:user.profileInfo.email
-        };
+        ctx.body = serializeUser(user);
       }
-    }).then((user)=>{
-      console.log(user);
-      console.log('User is not in the database we need to create...');
-      let newToken = uuid.v4();
-      let newDocument = {
-        fbToken:'1234',     // fbToken
-        authToken:newToken,
-        profileInfo: {
-          fbId: fbData.id,            // fbData.id
-          firstName:'Percy',       // fbData.first_name
-          lastName:'Jackson',        // fbData.last_name
-          picture:'Lightening Thief Image',         // fbData.picture.data.url
-          email:'zues@pj.com'           // fbData.email
+      else {
+        console.log(user);
+        console.log('User is not in the database we need to create...');
+        let newToken = uuid.v4();
+        let newDocument = {
+          fbToken:'1234',     // fbToken
+          authToken:newToken,
+          profileInfo: {
+            fbId: fbData.id,            // fbData.id
+            firstName:'Percy',       // fbData.first_name
+            lastName:'Jackson',        // fbData.last_name
+            picture:'Lightening Thief Image',         // fbData.picture.data.url
+            email:'zues@pj.com'           // fbData.email
+          }
         }
+        let newUser = new User(newDocument);
+        newUser.save();
+        console.log('New user has been created!');
+        ctx.status = 200;
+        ctx.body = serializeUser(newUser);
       }
-
-      //  convert to a promise
-      let newUser = new User(newDocument);
-      newUser.save();
-      console.log('New user has been created!');
-      ctx.status = 200;
-      ctx.body = {
-        fbToken: newUser.fbToken,
-        authToken: newUser.authToken,
-        fbId:newUser.profileInfo.fbId,
-        firstName:newUser.profileInfo.firstName,
-        lastName:newUser.profileInfo.lastName,
-        picture:newUser.profileInfo.picture,
-        email:newUser.profileInfo.email
-      };
     })
     .catch((err) => {
       console.log('Error creating or accessing user*:' + err);
