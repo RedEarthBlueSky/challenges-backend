@@ -8,13 +8,12 @@ const submissionsCtrl = require('./controllers/submissions.js');
 const challengesCtrl = require('./controllers/challenges.js');
 
 router.post('/sign-in/facebook', usersCtrl.login);
-// router.post('/users', usersCtrl.createUser);  //  this is now part of signup
 router.get('/users/:notification', usersCtrl.notifications);
 router.get('/me',usersCtrl.checkUser);
 // router.del('/me',usersCtrl.delUser);
 
+router.post('/submission', submissionsCtrl.postSubmission);
 // router.get('submissions/:feed', submissionsCtrl.getFeed);
-// router.post('/submission', submissionsCtrl.postSubmission);
 // router.get('/submissions/:id', submissionsCtrl.getSpecificSubmission);
 // router.get('/submissions/:self', submissionsCtrl.getSelfSubmissions);
 

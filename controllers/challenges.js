@@ -27,7 +27,7 @@ exports.postChallenge = function* (next) {
       };
       try {
         let newChallenge = new Challenge(challengeDocument);
-        let temp = yield newChallenge.save();
+        yield newChallenge.save();
         ctx.status = 200;
         ctx.body = temp;
       } catch(err) {

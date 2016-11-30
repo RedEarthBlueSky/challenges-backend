@@ -39,31 +39,4 @@
   "capatureURL": "some capture URL here",
   "imageURL": "https://twitter.com/marthastahl/status/504336908995272704/photo/1",
   "popularity":"Number"
-},
-{
-  "authorId": "352058",
-  "authorName": "Some test name here",
-  "challengeId": "Some challengeid here",
-  "created_at": "2016-08-05",
-  "challengeTitle": "The Plank Challenge",
-  "comment":"Some comments here",
-  "description": "Taking photos of yourself in faux rigor mortis on some random object.",
-  "totalChallenged": "7834",
-  "totalSubmited": "67875",
-  "capatureURL": "some capture URL here",
-  "imageURL": "http://www.abadan.net/wp-content/uploads/2013/07/Funny-Plank-joke-Abadan-Iran.jpg",
-  "popularity":"Number"
-},
-{
-  "authorId": "334455",
-  "authorName": "Some test name here",
-  "challengeId": "Some challengeid here",
-  "created_at": "2016-11-26",
-  "challengeTitle": "The Mannequin Challenge",
-  "comment":"Some comments here",
-  "description": "See how long you can hold a pose, at a novel location, without moving.",
-  "totalChallenged": "7",
-  "totalSubmited": "1",
-  "capatureURL": "some capture URL here",
-  "imageURL": "http://i1.mirror.co.uk/incoming/article9273845.ece/ALTERNATES/s615b/The-European-Tour-doing-the-Mannequin-Challenge.jpg",
 }
