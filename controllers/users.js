@@ -14,9 +14,20 @@ const fb = FB.extend({appId: fbOptions.appId, appSecret: fbOptions.appSecret});
 
 const User = require('../models').models.User;
 
+let serializeUser = (user) => {
+  return {
+    fbToken: user.fbToken,
+    authToken: user.authToken,
+    fbId:user.profileInfo.fbId,
+    firstName:user.profileInfo.firstName,
+    lastName:user.profileInfo.lastName,
+    picture:user.profileInfo.picture,
+    email:user.profileInfo.email
+  }
+}
+
 exports.login = function* (next) {
   let ctx = this;
-
   let fbToken = this.request.body.fbToken;
   fb.setAccessToken(fbToken);
 
@@ -35,12 +46,14 @@ exports.login = function* (next) {
       return data;
     })
     .catch((err) => {
+      ctx.status = 401;
+      ctx.body = { error: "Token not valid."};
       console.log('An error has returned: ' + err);
   });
 
   yield User.findOne({ 'profileInfo.fbId': fbData.id })
-    .then((user)=>{
-      if (user !== null) {
+    .then(( user ) => {
+      if ( user !== null ) {
         ctx.status = 200;
         ctx.body = serializeUser(user);
       }
@@ -61,26 +74,29 @@ exports.login = function* (next) {
         let newUser = new User(newDocument);
         newUser.save();
         console.log('New user has been created!');
+        ctx.status = 200;
         ctx.body = serializeUser(newUser);
       }
     })
-    .catch((err) => {console.log(err);});
+    .catch((err) => {
+      console.log('Error creating or accessing user*:' + err);
+    });
 };
 
-let serializeUser = (user) => {
-  return {
-    fbToken: user.fbToken,
-    authToken: user.authToken,
-    fbId:user.profileInfo.fbId,
-    firstName:user.profileInfo.firstName,
-    lastName:user.profileInfo.lastName,
-    picture:user.profileInfo.picture,
-    email:user.profileInfo.email
-  }
-};
+exports.checkUser = function* (next) {
+  let ctx = this;
+  let authToken = this.request.header.authtoken;
 
-let checkUser = function (next) {
-
+  yield User.findOne({ 'authToken': authToken })
+    .then((user) => {
+      if (user !== null) {
+        ctx.status = 200;
+        ctx.body = serializeUser(user);
+      }
+    })
+    .catch((err) => {
+      console.log('Error checking user*:' + err);
+  });
 };
 
 let createUser = function* (next) {

@@ -11,6 +11,7 @@ const bcrypt = require('bcrypt');
 const config = require('./config.json');
 const router = require('./router.js');
 const db = require('./models');
+const User = require('./models').models.User;
 
 const app = koa();
 
@@ -18,10 +19,23 @@ app.use(cors());
 app.use(bodyParser());
 app.use(router.routes());
 
+//  ADD passport middleware for challenges POST
+passport.use(new BearerStrategy(
+  function (authToken, done) {
+    User.findOne({ authToken: authToken }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false); }
+      return done(null, user, {scope: 'all'});
+    });
+  }
+));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use( function *() {
   this.body = 'We have some challenges for you!';
 })
-
 
 db.connection.on('error', (err) => {
   console.log(`Error connecting to ${config.dbname} with error: ${err}`);
