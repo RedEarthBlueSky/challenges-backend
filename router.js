@@ -10,7 +10,7 @@ const challengesCtrl = require('./controllers/challenges.js');
 router.post('/sign-in/facebook', usersCtrl.login);
 // router.post('/users', usersCtrl.createUser);  //  this is now part of signup
 router.get('/users/:notification', usersCtrl.notifications);
-router.get('/me',usersCtrl.checkUser);
+router.post('/me',usersCtrl.checkUser);
 // router.del('/me',usersCtrl.delUser);
 
 // router.get('submissions/:feed', submissionsCtrl.getFeed);
