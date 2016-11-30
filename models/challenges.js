@@ -4,18 +4,16 @@ const mongoose = require('mongoose');
 const relationship = require('mongoose-relationship');
 
 const challengeSchema = new mongoose.Schema ({
-  authorId: String,       //  author id from users
-  authorName: String,         //  author will be user from users
   challengeId: String,
-  challengeTitle: String,
-  description:String,
+  creatorUserId: String,
+  creatorName: String,
+  created_at: String,
+  title: String,
   comment: String,
+  description: String,
+  totalChallenged: String,
   totalSubmitted: String,
-  totalChallenged:String,
-  created_at:String,
-  captureURL:String,
-  imageURL:String,
-  popularity:Number
+  picture: String
 });
 
 module.exports = mongoose.model('Challenge', challengeSchema );
