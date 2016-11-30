@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
-mongoose.promise = global.promise;
+const relationship = require("mongoose-relationship");
 
 const eventSchema = new mongoose.Schema({
   "fbToken": { type: String, index: { unique: true }},
@@ -11,8 +11,10 @@ const eventSchema = new mongoose.Schema({
     firstName:String,
     lastName:String,
     picture:String,
-    email:String
-  }
+    email:String,
+  },
+  submission: [{ type: mongoose.Schema.ObjectId, ref:"Submission"}],
+  challenge: [{type:mongoose.Schema.ObjectId, ref:"Challenge"}]
 });
 
 module.exports = mongoose.model('User', eventSchema);

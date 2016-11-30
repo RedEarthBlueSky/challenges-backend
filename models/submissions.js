@@ -23,7 +23,11 @@ const submissionSchema = new mongoose.Schema ({
   challengeTypeId: String,
   comment: String,
   videoURL: String,
-  captureURL: String
+  captureURL: String,
+  users:[{type: mongoose.Schema.ObjectId, ref: 'User', childPath: 'users'}],
+  challenges:[{type: mongoose.Schema.ObjectId, ref: 'Challenge', childPath: 'challenges'}]
 });
 
+submissionSchema.plugin(relationship, {relationshipPathName: 'users'});
+submissionSchema.plugin(relationship, {relationshipPathName: 'challenges'});
 module.exports = mongoose.model('Submission', submissionSchema );
