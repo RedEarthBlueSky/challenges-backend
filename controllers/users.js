@@ -28,7 +28,6 @@ let serializeUser = (user) => {
 
 exports.login = function* (next) {
   let ctx = this;
-  console.log(this.request.body);
   let fbToken = this.request.body.fbToken;
   fb.setAccessToken(fbToken);
 
@@ -53,8 +52,8 @@ exports.login = function* (next) {
   });
 
   yield User.findOne({ 'profileInfo.fbId': fbData.id })
-    .then((user)=>{
-      if (user !== null) {
+    .then(( user ) => {
+      if ( user !== null ) {
         ctx.status = 200;
         ctx.body = serializeUser(user);
       }
@@ -85,8 +84,20 @@ exports.login = function* (next) {
     });
 };
 
-let checkUser = function (next) {
+exports.checkUser = function* (next) {
+  let ctx = this;
+  let authToken = this.request.header.authtoken;
 
+  yield User.findOne({ 'authToken': authToken })
+    .then((user) => {
+      if (user !== null) {
+        ctx.status = 200;
+        ctx.body = serializeUser(user);
+      }
+    })
+    .catch((err) => {
+      console.log('Error checking user*:' + err);
+  });
 };
 
 let createUser = function* (next) {
