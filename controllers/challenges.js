@@ -48,8 +48,7 @@ exports.postChallenge = function* (next) {
 exports.getChallenges = function* (next) {
   this.type = 'json';
   try {
-    const challenges = yield Challenge.find()
-      .populate('users');
+    const challenges = yield Challenge.find();
       this.status = 200;
       this.body = challenges;
 
