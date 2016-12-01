@@ -14,7 +14,7 @@ router.get('/me',usersCtrl.checkUser);
 
 router.post('/submission', submissionsCtrl.postSubmission);
 // router.get('submissions/:feed', submissionsCtrl.getFeed);
-// router.get('/submissions/:id', submissionsCtrl.getSpecificSubmission);
+router.get('/submissions/:id', submissionsCtrl.getSpecificSubmission);
 // router.get('/submissions/:self', submissionsCtrl.getSelfSubmissions);
 
 router.get('/challenges', challengesCtrl.getChallenges);

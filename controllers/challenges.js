@@ -16,23 +16,27 @@ exports.postChallenge = function* (next) {
       let challengeDocument = {
         challengeId: challengeId,
         creatorUserId: user._id,
-        creatorName: user.profileInfo.firstName + ' ' + user.profileInfo.lastName,
         created_at: + new Date(),
         title:ctx.request.body.title,
-        comment:"Some comments not sure where from",
         description:ctx.request.body.description,
-        totalChallenged: "0",
-        totalSubmitted: "0",
-        picture:ctx.request.body.imageURL
+        totalChallenged: ctx.request.body.totalChallenged || "0",
+        totalSubmitted: ctx.request.body.totalSubmitted || "0",
+        imageURL:ctx.request.body.imageURL || "some placeholder image here"
       };
+      let newChallenge = new Challenge(challengeDocument);
+      yield newChallenge.save();
+      console.log(newChallenge.challengeId);
       try {
-        let newChallenge = new Challenge(challengeDocument);
-        yield newChallenge.save();
-        ctx.status = 200;
-        ctx.body = temp;
-      } catch(err) {
-        console.log(err);
+        let challenge = yield Challenge.findOne({challengeId:newChallenge.challengeId});
+        if (challenge.challengeId) {
+          ctx.status = 200;
+          ctx.body = challenge;
+        }
+      } catch (err) {
+        ctx.status = 401;
+        ctx.body = err;
       }
+
     }
     else {
       ctx.status = 401;
@@ -44,7 +48,8 @@ exports.postChallenge = function* (next) {
 exports.getChallenges = function* (next) {
   this.type = 'json';
   try {
-    const challenges = yield Challenge.find();
+    const challenges = yield Challenge.find()
+      .populate('users');
       this.status = 200;
       this.body = challenges;
 
