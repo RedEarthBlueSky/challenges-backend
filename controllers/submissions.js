@@ -17,16 +17,22 @@ exports.postSubmission = function* (err, next) {
           challengedUsers: [
             {
               userId: body.challengedUsers[0].userId,
+              name: body.challengedUsers[0].name,
+              picture: body.challengedUsers[0].picture,
               status: body.challengedUsers[0].status,
               submissionId: body.challengedUsers[0].submissionId || 'pending'
             },
             {
               userId: body.challengedUsers[1].userId,
+              name: body.challengedUsers[1].name,
+              picture: body.challengedUsers[1].picture,
               status: body.challengedUsers[1].status,
               submissionId: body.challengedUsers[1].submissionId || 'pending'
             },
             {
               userId: body.challengedUsers[2].userId,
+              name: body.challengedUsers[2].name,
+              picture: body.challengedUsers[2].picture,
               status: body.challengedUsers[2].status,
               submissionId: body.challengedUsers[2].submissionId || 'pending'
             },
@@ -61,10 +67,13 @@ exports.postSubmission = function* (err, next) {
 exports.getSpecificSubmission = function* (next) {
   this.type = 'json';
   const id = this.params.id;
-  console.log(id);
   try {
     const submission = yield Submission.findOne({challengeTypeId:id})
-    .populate('authorId');
+      .populate('authorId')
+      .populate('challengeTypeId')
+      .populate('challengedUsers[0].userId')
+      .populate('challengedUsers[1].userId')
+      .populate('challengedUsers[2].userId');
     this.body = submission;
   } catch(err) {
     this.status = 401;
@@ -77,11 +86,13 @@ exports.getSelfSubmissions = function* (next) {
   yield passport.authenticate( 'bearer', {session:false},
     function *(err, user) {
       if (user) {
-        console.log(user._id);
         try {
           let submissions = yield Submission.find({authorId:user._id})
-            .populate('authorId');
-          console.log(submissions);
+            .populate('authorId')
+            .populate('challengeTypeId')
+            .populate('challengedUsers[0].userId')
+            .populate('challengedUsers[1].userId')
+            .populate('challengedUsers[2].userId');
           ctx.status = 201;
           ctx.body = submissions;
 
@@ -106,7 +117,11 @@ exports.getLatestSubmissions = function* (next) {
     let submissions = yield Submission.find({challengeTypeId: challengeTypeId})
       .sort({_id:-1})  //  order newest to oldest
       .limit(1)
-      .populate('authorId');        // return only one
+      .populate('authorId')
+      .populate('challengeTypeId')
+      .populate('challengedUsers[0].userId')
+      .populate('challengedUsers[1].userId')
+      .populate('challengedUsers[2].userId'); // return only one
     ctx.body = submissions;
   } catch (err) {
     ctx.status = 401;

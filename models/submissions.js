@@ -7,22 +7,28 @@ const submissionSchema = new mongoose.Schema ({
   "challengedUsers":
   [
     {
-      userId: String,
+      userId: { type: mongoose.Schema.ObjectId, ref:'User' },
+      name: String,
+      picture: String,
       status: String,
       submissionId: String
     },
     {
-      userId: String,
+      userId: { type: mongoose.Schema.ObjectId, ref:'User' },
+      name: String,
+      picture: String,
       status: String,
       submissionId: String
     },
     {
-      userId: String,
+      userId: { type: mongoose.Schema.ObjectId, ref:'User' },
+      name: String,
+      picture: String,
       status: String,
       submissionId: String
     }
   ],
-  challengeTypeId: String,
+  challengeTypeId: { type: mongoose.Schema.ObjectId, ref:'Challenge' },
   comment: String,
   videoURL: String,
   captureURL: String,
