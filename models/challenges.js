@@ -3,8 +3,8 @@
 const mongoose = require('mongoose');
 
 const challengeSchema = new mongoose.Schema ({
+  creatorUserId: { type: mongoose.Schema.ObjectId, ref:'User' },
   challengeId: String,
-  creatorUserId: String,
   created_at: String,
   title: String,
   description: String,
