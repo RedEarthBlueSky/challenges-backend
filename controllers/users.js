@@ -60,18 +60,18 @@ exports.login = function* (next) {
         ctx.body = serializeUser(user);
       }
       else {
-        console.log(user);
+        // TODO: Fix if user is already in the database (it will give error)
         console.log('User is not in the database we need to create...');
         let newToken = uuid.v4();
         let newDocument = {
-          fbToken:'1234',     // fbToken
+          fbToken:fbToken,                      // fbToken
           authToken:newToken,
           profileInfo: {
-            fbId: fbData.id,            // fbData.id
-            firstName:'Percy',       // fbData.first_name
-            lastName:'Jackson',        // fbData.last_name
-            picture:'Lightening Thief Image',         // fbData.picture.data.url
-            email:'zues@pj.com'           // fbData.email
+            fbId: fbData.id,                    // fbData.id
+            firstName: fbData.first_name,       // fbData.first_name
+            lastName: fbData.last_name,         // fbData.last_name
+            picture: fbData.picture.data.url,   // fbData.picture.data.url
+            email: fbData.email                 // fbData.email
           }
         }
         let newUser = new User(newDocument);
@@ -83,15 +83,14 @@ exports.login = function* (next) {
       }
     })
     .catch((err) => {
-      console.log('Error creating or accessing user*:' + err);
+      console.log('Error creating or accessing user:' + err);
     });
 };
 
 exports.checkUser = function* (next) {
   let ctx = this;
-  let authToken = this.request.header.authtoken;
-
-  yield User.findOne({ 'authToken': authToken })
+  let body = yield this.request.body;
+  yield User.findOne({ 'authToken': body.authToken })
     .then((user) => {
       if (user !== null) {
         ctx.status = 200;
@@ -101,14 +100,6 @@ exports.checkUser = function* (next) {
     .catch((err) => {
       console.log('Error checking user*:' + err);
   });
-};
-
-let createUser = function* (next) {
-
-};
-
-exports.delUser = function* (next) {
-
 };
 
 exports.notifications = function* (next) {
