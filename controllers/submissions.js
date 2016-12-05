@@ -1,6 +1,7 @@
 'use strict'
 const passport = require('koa-passport');
 const axios = require("../lib/axios");
+const mkdirp = require("mkdirp");
 
 const User = require('../models').models.User;
 const Submission = require('../models').models.Submission;
@@ -11,6 +12,17 @@ exports.postSubmission = function* (err, next) {
   yield passport.authenticate( 'bearer', {session:false},
     function *(err, user) {
       if (user) {
+
+        //  creat a directory for the authorId of user
+        const dirPath = '/Users/iansalt/redearthbluesky/challenges-backend/static/videos';
+        let dir = dirPath + '/' + user._id;
+
+        mkdirp(dir, function (err) {
+          if (err) console.log('Make directory error*: ' + err);
+          else console.log('Pow!');
+        });
+        //  END ******** create authorId directory
+
         let authorId = user._id;
         let subDoc = {
           authorId: authorId,

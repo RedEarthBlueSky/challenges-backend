@@ -30,7 +30,7 @@ let client = s3.createClient({
 // let userFolder = BUCKET + '/' + folderName + '/'; // create folder name: authId
 
 const params = {
-  localFile: '/Users/iansalt/Desktop/test.mp4',
+  localFile: '/Users/iansalt/Desktop/videos/test.mp4',
   s3BucketEndpoint: true,
   s3Params: {
     Bucket: BUCKET,
