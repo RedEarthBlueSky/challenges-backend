@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const usersCtrl = require('./controllers/users.js');
 const submissionsCtrl = require('./controllers/submissions.js');
 const challengesCtrl = require('./controllers/challenges.js');
+const s3Ctrl = require('./controllers/s3.js');
 
 router.post('/sign-in/facebook', usersCtrl.login);
 router.get('/users/:notification', usersCtrl.notifications);
@@ -22,5 +23,7 @@ router.get('/challenges', challengesCtrl.getChallenges);
 router.post('/challenges', challengesCtrl.postChallenge);
 router.get('/challenges/:id', challengesCtrl.getSpecificChallenge);
 // router.get('/challenges/:popularity', challengesCtrl.mostPopularChallenge);
+
+router.post('/videos/upload', s3Ctrl.uploadVideo);
 
 module.exports = router;
