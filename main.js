@@ -22,7 +22,6 @@ app.use(router.routes());
 //  ADD passport middleware for challenges POST
 passport.use(new BearerStrategy(
   function (authToken, done) {
-    console.log(authToken);
     User.findOne({ authToken: authToken }, function (err, user) {
       if (err) { return done(err); }
       if (!user) { return done(null, false); }
