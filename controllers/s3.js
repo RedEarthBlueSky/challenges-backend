@@ -17,7 +17,7 @@ const s3 = require('s3');
 
 const BUCKET = 'codeworks-challenges';
 
-const client = s3.createClient({
+let client = s3.createClient({
   s3Client: awsS3Client,
   maxAsyncS3: 20,     // this is the default
   s3RetryCount: 3,    // this is the default
@@ -26,17 +26,23 @@ const client = s3.createClient({
   multipartUploadSize: 15728640, // this is the default (15 MB)
 });
 
+// let folderName = 'authorId';
+// let userFolder = BUCKET + '/' + folderName + '/'; // create folder name: authId
+
 const params = {
-  localFile: '/Users/iansalt/Desktop/AmazonS3.png',
+  localFile: '/Users/iansalt/Desktop/test.mp4',
   s3BucketEndpoint: true,
   s3Params: {
     Bucket: BUCKET,
-    //  key to be the file URL
-    Key:'file URL'
+    Key: 'test.mp4', //  file name
+    ACL:'public-read'
   }
-}
+};
 
-exports.uploadVideo = function* (next) {
+//  work around to stop files hanging on upload
+client.s3.addExpect100Continue = function () {};
+
+exports.uploadFile = function* (next) {
 
   let uploader = client.uploadFile(params);
 

@@ -24,6 +24,6 @@ router.post('/challenges', challengesCtrl.postChallenge);
 router.get('/challenges/:id', challengesCtrl.getSpecificChallenge);
 // router.get('/challenges/:popularity', challengesCtrl.mostPopularChallenge);
 
-router.post('/videos/upload', s3Ctrl.uploadVideo);
+router.post('/videos/upload', s3Ctrl.uploadFile);
 
 module.exports = router;
