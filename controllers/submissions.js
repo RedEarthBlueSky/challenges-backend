@@ -1,7 +1,7 @@
 'use strict'
 const passport = require('koa-passport');
 const axios = require("../lib/axios");
-const mkdirp = require("mkdirp");
+const mkdirp = require("mkdirp");  //  make dirs
 
 const User = require('../models').models.User;
 const Submission = require('../models').models.Submission;
@@ -13,15 +13,14 @@ exports.postSubmission = function* (err, next) {
     function *(err, user) {
       if (user) {
 
-        //  creat a directory for the authorId of user
+        //  creat authorId dir
         const dirPath = '/Users/iansalt/redearthbluesky/challenges-backend/static/videos';
         let dir = dirPath + '/' + user._id;
-
         mkdirp(dir, function (err) {
           if (err) console.log('Make directory error*: ' + err);
           else console.log('Pow!');
         });
-        //  END ******** create authorId directory
+        //  END ******** create authorId dir
 
         let authorId = user._id;
         let subDoc = {

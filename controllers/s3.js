@@ -29,13 +29,18 @@ let client = s3.createClient({
 // let folderName = 'authorId';
 // let userFolder = BUCKET + '/' + folderName + '/'; // create folder name: authId
 
+let authorId = '58401311c780b02d99fc9bb7';
+let videoName = 'cinamon-challenge.mp4';
 const params = {
-  localFile: '/Users/iansalt/Desktop/videos/test.mp4',
+  localFile: '/Users/iansalt/Desktop/videos/' + videoName,
   s3BucketEndpoint: true,
+  contentType: 'video/mp4',
   s3Params: {
     Bucket: BUCKET,
-    Key: 'test.mp4', //  file name
-    ACL:'public-read'
+    //  prefix videos/ created obect to store file in
+    //  add other folder objects or files using same prefixes
+    Key: 'videos/' + authorId + '/' + videoName, //  file name
+    ACL:'public-read-write'
   }
 };
 
