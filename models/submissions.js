@@ -8,16 +8,19 @@ const submissionSchema = new mongoose.Schema ({
   [
     {
       userId: String,
+      name: String,
       status: String,
       submissionId: String
     },
     {
       userId: String,
+      name: String,
       status: String,
       submissionId: String
     },
     {
       userId: String,
+      name: String,
       status: String,
       submissionId: String
     }

@@ -2,8 +2,6 @@
 const passport = require('koa-passport');
 const s3config = require('../AwsConfig.json');
 const AWS = require('aws-sdk');
-const parse = require('co-busboy');
-const fs = require('fs');
 
 AWS.config = new AWS.Config();
 AWS.config.accessKeyId = s3config.accessKeyId;
@@ -27,41 +25,8 @@ let client = s3.createClient({
 //  work around to stop files hanging on upload
 client.s3.addExpect100Continue = function () {};
 
-exports.uploadFile = function* (err, next) {
-  let ctx = this;
-  let authorId;
-  yield passport.authenticate('bearer', {session:false},
-    function *(err, user) {
-      if (user) {
-        ctx.status = 200;
-        authorId = user._id;
-        ctx.body = authorId;
-      } else {
-        ctx.status = 401;
-        ctx.body = 'Cannot find user *: ' + err;
-      }
-    });
+exports.uploadFile = function* (fileName, authorId) {
 
-  console.log(!this.request.is('multipart/*'));
-  let parts = parse(this);
-  let fileName;
-  console.log(parts);
-  let part;
-  while (part = yield parts) {
-    if (part.length) {
-      //  arrays are busboy fields
-      console.log('key *: ', part[0]);
-      console.log('value *: ', part[1]);
-      // if (part[0]==='fileName') fileName = part[1];
-    } else {
-      //  otherwise it is a stream
-      console.log('Handle the stream here');
-      fileName = part.fileName;
-      //  need to write the file name as well as the path here
-      part.pipe(fs.createWriteStream('/tmp/' + part.filename));
-    }
-    console.log('And we are done parsing the form');
-  }
   const params = {
     localFile: '/tmp/' + fileName,
     s3BucketEndpoint: true,
@@ -89,4 +54,7 @@ exports.uploadFile = function* (err, next) {
   uploader.on('end', function () {
     console.log('done uploading'); //  include URL to the file upload
   });
+
+  return `https://${s3config.Bucket}.s3.amazonaws.com/videos/${authorId}/${fileName}`;
+
 };

@@ -1,47 +1,73 @@
 'use strict'
 const passport = require('koa-passport');
-const axios = require("../lib/axios");
+const parse = require('co-busboy');
+const fs = require('fs');
+const uuid = require('uuid');
 
 const User = require('../models').models.User;
 const Submission = require('../models').models.Submission;
+const s3 = require('./s3.js');
 
 exports.postSubmission = function* (err, next) {
   let ctx = this;
-  let body = this.request.body;
   yield passport.authenticate( 'bearer', {session:false},
     function *(err, user) {
       if (user) {
         let authorId = user._id;
+        let parts = parse(ctx);
+        let fileName = uuid.v4();
+        let part;
+        let noFileBody = {};
+        while (part = yield parts) {
+          if (part.length) {
+            noFileBody[part[0]]=part[1]
+          } else {
+            fileName = part.fileName;
+            part.pipe(fs.createWriteStream('/tmp/' + part.filename));
+          }
+        }
+
+        if (noFileBody.fileName) fileName = noFileBody.fileName;
+
+        if (noFileBody.challengedUsers) noFileBody.challengedUsers = JSON.parse(noFileBody.challengedUsers);
+
         let subDoc = {
           authorId: authorId,
           challengedUsers: [
             {
-              userId: body.challengedUsers[0].userId,
-              status: body.challengedUsers[0].status,
-              submissionId: body.challengedUsers[0].submissionId || 'pending'
+              name: noFileBody.challengedUsers[0].name,
+              picture: noFileBody.challengedUsers[0].picture,
+              status: noFileBody.challengedUsers[0].status || 'pending',
+              submissionId: noFileBody.challengedUsers[0].submissionId || 'pending'
             },
             {
-              userId: body.challengedUsers[1].userId,
-              status: body.challengedUsers[1].status,
-              submissionId: body.challengedUsers[1].submissionId || 'pending'
+              name: noFileBody.challengedUsers[1].name,
+              picture: noFileBody.challengedUsers[1].picture,
+              status: noFileBody.challengedUsers[1].status || 'pending',
+              submissionId: noFileBody.challengedUsers[1].submissionId || 'pending'
             },
             {
-              userId: body.challengedUsers[2].userId,
-              status: body.challengedUsers[2].status,
-              submissionId: body.challengedUsers[2].submissionId || 'pending'
-            },
+              name: noFileBody.challengedUsers[2].name,
+              picture: noFileBody.challengedUsers[2].picture,
+              status: noFileBody.challengedUsers[2].status || 'pending',
+              submissionId: noFileBody.challengedUsers[2].submissionId || 'pending'
+            }
           ],
-          created_at: body.created_at,
-          challengeTypeId: body.challengeTypeId,
-          comment: body.comment,
-          videoURL: body.videoURL,
-          captureURL: body.captureURL
+          challengeTypeId: noFileBody.challengeTypeId,
+          comment: noFileBody.comment || '',
+          videoURL: '',
+          captureURL: ''
         };
 
+
+        let videoURL = yield s3.uploadFile(fileName,authorId);
+
+        subDoc.videoURL = videoURL;
+
         let newSubmission = new Submission(subDoc);
-        yield newSubmission.save();
+        let mySub = yield newSubmission.save();
         try {
-          let submission = yield Submission.findOne({authorId:authorId});
+          let submission = yield Submission.findOne({_id: mySub._id});
           if (submission._id) {
             ctx.status = 200;
             ctx.body = submission;
@@ -61,7 +87,6 @@ exports.postSubmission = function* (err, next) {
 exports.getSpecificSubmission = function* (next) {
   this.type = 'json';
   const id = this.params.id;
-  console.log(id);
   try {
     const submission = yield Submission.findOne({challengeTypeId:id})
     .populate('authorId');
@@ -77,11 +102,9 @@ exports.getSelfSubmissions = function* (next) {
   yield passport.authenticate( 'bearer', {session:false},
     function *(err, user) {
       if (user) {
-        console.log(user._id);
         try {
           let submissions = yield Submission.find({authorId:user._id})
             .populate('authorId');
-          console.log(submissions);
           ctx.status = 201;
           ctx.body = submissions;
 
