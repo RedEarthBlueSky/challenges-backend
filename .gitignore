@@ -3,3 +3,5 @@ load-config.js
 node_modules/
 dummy-data.json
 static/
+AwsConfig.json
+.gitignore
