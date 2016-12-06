@@ -89,7 +89,11 @@ exports.getSpecificSubmission = function* (next) {
   const id = this.params.id;
   try {
     const submission = yield Submission.findOne({challengeTypeId:id})
-    .populate('authorId');
+      .populate('authorId')
+      .populate('challengeTypeId')
+      .populate('challengedUsers[0].userId')
+      .populate('challengedUsers[1].userId')
+      .populate('challengedUsers[2].userId');
     this.body = submission;
   } catch(err) {
     this.status = 401;
@@ -104,7 +108,8 @@ exports.getSelfSubmissions = function* (next) {
       if (user) {
         try {
           let submissions = yield Submission.find({authorId:user._id})
-            .populate('authorId');
+            .populate('authorId')
+            .populate('challengeTypeId');
           ctx.status = 201;
           ctx.body = submissions;
 
@@ -129,7 +134,11 @@ exports.getLatestSubmissions = function* (next) {
     let submissions = yield Submission.find({challengeTypeId: challengeTypeId})
       .sort({_id:-1})  //  order newest to oldest
       .limit(1)
-      .populate('authorId');        // return only one
+      .populate('authorId')
+      .populate('challengeTypeId')
+      .populate('challengedUsers[0].userId')
+      .populate('challengedUsers[1].userId')
+      .populate('challengedUsers[2].userId'); // return only one
     ctx.body = submissions;
   } catch (err) {
     ctx.status = 401;

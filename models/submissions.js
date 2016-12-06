@@ -9,23 +9,27 @@ const submissionSchema = new mongoose.Schema ({
     {
       userId: String,
       name: String,
+      picture: String,
+      status: String,
+      submissionId: String
+    },
+    {
+
+      userId: String,
+      name: String,
+      picture: String,
       status: String,
       submissionId: String
     },
     {
       userId: String,
       name: String,
-      status: String,
-      submissionId: String
-    },
-    {
-      userId: String,
-      name: String,
+      picture: String,
       status: String,
       submissionId: String
     }
   ],
-  challengeTypeId: String,
+  challengeTypeId: { type: mongoose.Schema.ObjectId, ref:'Challenge' },
   comment: String,
   videoURL: String,
   captureURL: String,
