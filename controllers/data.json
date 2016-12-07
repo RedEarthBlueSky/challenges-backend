@@ -1,4 +1,43 @@
 {
+  "challenges": [
+    {
+      "title": "Cinnamon Challenge",
+      "description": "Partake of a tea spoon of Cinnamon",
+      "totalChallenged": "0",
+      "totalSubmitted": "0",
+      "imageURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/challenge/cinamon-challenge.jpg"
+    },
+    {
+      "title": "Extreme Ironing Challenge",
+      "description": "Put the fun back into ironing in extreme locals",
+      "totalChallenged": "0",
+      "totalSubmitted": "0",
+      "imageURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/challenge/extreme-ironing.jpg"
+    },
+    {
+      "title": "Icebucket Challenge",
+      "description": "The one that started it all",
+      "totalChallenged": "0",
+      "totalSubmitted": "0",
+      "imageURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/challenge/icebucket-challenge.jpg"
+    },
+    {
+      "title": "Public Planking Challenge",
+      "description": "Be as creative and public with your planking as you can",
+      "totalChallenged": "0",
+      "totalSubmitted": "0",
+      "imageURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/challenge/plank-challenge.jpg"
+    },
+    {
+      "title": "Wrestle the Wildlife Challenge",
+      "description": "A friendly bout of rough housing with your favorite fauna",
+      "totalChallenged": "0",
+      "totalSubmitted": "0",
+      "imageURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/challenge/wrestle-kangaroo.jpg"
+    }
+  ],
+
+
   "profileInfo": [{
       "firstName":"Strangely",
       "lastName":"Nibbles",
