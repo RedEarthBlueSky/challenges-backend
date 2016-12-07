@@ -13,6 +13,8 @@ let promise = FB;
 const fb = FB.extend({appId: fbOptions.appId, appSecret: fbOptions.appSecret});
 
 const User = require('../models').models.User;
+const Challenge = require('../models').models.Challenge;
+const Submission = require('../models').models.Submission;
 
 let serializeUser = (user) => {
   return {
@@ -73,21 +75,21 @@ exports.login = function* (next) {
         }
         let newUser = new User(newDocument);
         newUser.save();
+
         console.log('New user has been created!');
         ctx.status = 200;
         ctx.body = serializeUser(newUser);
       }
     })
     .catch((err) => {
-      console.log('Error creating or accessing user*:' + err);
+      console.log('Error creating or accessing user:' + err);
     });
 };
 
 exports.checkUser = function* (next) {
   let ctx = this;
-  let authToken = this.request.header.authtoken;
-
-  yield User.findOne({ 'authToken': authToken })
+  let body = yield this.request.body;
+  yield User.findOne({ 'authToken': body.authToken })
     .then((user) => {
       if (user !== null) {
         ctx.status = 200;
@@ -97,14 +99,6 @@ exports.checkUser = function* (next) {
     .catch((err) => {
       console.log('Error checking user*:' + err);
   });
-};
-
-let createUser = function* (next) {
-
-};
-
-exports.delUser = function* (next) {
-
 };
 
 exports.notifications = function* (next) {

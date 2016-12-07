@@ -19,10 +19,12 @@
   "homepage": "https://github.com/RedEarthBlueSky/challenges-backend#readme",
   "dependencies": {
     "atob": "^2.0.3",
+    "aws-sdk": "^2.7.10",
     "axios": "^0.15.2",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
     "co-body": "^4.2.0",
+    "co-busboy": "^1.3.1",
     "fb": "^1.1.1",
     "fs": "0.0.1-security",
     "koa": "^1.2.4",
@@ -31,12 +33,16 @@
     "koa-passport": "^1.3.0",
     "koa-request": "^1.0.0",
     "koa-router": "^5.4.0",
+    "mkdirp": "^0.5.1",
     "mongoose": "^4.6.8",
     "mongoose-relationship": "^0.1.5",
     "nconf": "^0.8.4",
     "passport-http": "^0.3.0",
     "passport-http-bearer": "^1.0.1",
-    "uuid": "^2.0.3"
+    "s3": "^4.4.0",
+    "s3-upload-stream": "^1.0.7",
+    "uuid": "^2.0.3",
+    "zlibjs": "^0.2.0"
   },
   "devDependencies": {
     "mocha": "^3.1.2"
