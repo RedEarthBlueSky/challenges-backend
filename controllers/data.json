@@ -1,0 +1,29 @@
+{
+  "profileInfo": [{
+      "firstName":"Strangely",
+      "lastName":"Nibbles",
+      "picture":"https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar1.jpg",
+      "email":"Strangely@nibbles.com"
+    },
+    { "firstName": "Kinda",
+      "lastName": "Koocky",
+      "picture": " https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar2.jpeg",
+      "email": "KoockyAs@nibbled.com"
+    },
+    { "firstName": "Strangely",
+      "lastName": "Nibbles",
+      "picture": " https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar3.jpg",
+      "email": "Strangely@nibbles.com"
+    },
+    { "firstName": "Cranky",
+      "lastName": "Basildon",
+      "picture": " https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar4.jpg",
+      "email": "Cranky@nibbles.com"
+    },
+    { "firstName": "Iva",
+      "lastName": "Noclue",
+      "picture": " https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar5.png",
+      "email": "Iva@nibbles.com"
+    }
+  ]
+}

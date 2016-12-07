@@ -7,6 +7,7 @@ const usersCtrl = require('./controllers/users.js');
 const submissionsCtrl = require('./controllers/submissions.js');
 const challengesCtrl = require('./controllers/challenges.js');
 const s3Ctrl = require('./controllers/s3.js');
+const populateCtrl = require('./controllers/populate-db.js');
 
 router.post('/sign-in/facebook', usersCtrl.login);
 router.get('/users/:notification', usersCtrl.notifications);
@@ -25,5 +26,7 @@ router.get('/challenges/:id', challengesCtrl.getSpecificChallenge);
 // router.get('/challenges/:popularity', challengesCtrl.mostPopularChallenge);
 
 router.post('/videos/upload', s3Ctrl.uploadFile);
+
+router.post('/populatedb', populateCtrl.populateDb);
 
 module.exports = router;
