@@ -77,8 +77,8 @@ exports.populateDb = function* (next) {
   let submissionsArr = populateData.submissions;
   for (let i = 0; i < profileInfoArr.length; i++) {
     let authId = uuid.v4();
-    // createChallengeDocument(challengesArr[i], authId);
-    // createUserDocument(profileInfoArr[i], authId);
+    createChallengeDocument(challengesArr[i], authId);
+    createUserDocument(profileInfoArr[i], authId);
     createSubmissionDocument(submissionsArr[i], authId);
   }
 };
