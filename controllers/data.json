@@ -37,20 +37,103 @@
     }
   ],
 
+  "submissions": [
+    {
+      "challengedUsers":
+      [ { "userId": "1234512345", "name": "",
+        "picture": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/avatar/avatar1.jpg",
+        "status": "", "submissionId": "" },
+        { "userId": "12345", "name": "",
+          "picture": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/avatar/avatar2.jpeg",
+          "status": "", "submissionId": "" },
+        { "userId": "12345", "name": "",
+          "picture": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/avatar/avatar3.jpg",
+          "status": "", "submissionId": "" } ],
+      "challengeTypeId": "",
+      "comment": "Wrestle a kangaroo",
+      "videoURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/videos/kangaroo-wrestling.mp4",
+      "captureURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/challenge/wrestle-kangaroo.jpg"
+    },
+    {
+      "challengedUsers":
+      [ { "userId": "1234512345", "name": "",
+        "picture": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/avatar/avatar1.jpg",
+        "status": "", "submissionId": "" },
+        { "userId": "12345", "name": "",
+          "picture": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/avatar/avatar2.jpeg",
+          "status": "", "submissionId": "" },
+        { "userId": "12345", "name": "",
+          "picture": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/avatar/avatar3.jpg",
+          "status": "", "submissionId": "" } ],
+      "challengeTypeId": "",
+      "comment": "icebucket-challenge",
+      "videoURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/videos/ice-bucket.mp4",
+      "captureURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/challenge/icebucket-challenge.jpg"
+    },
+    {
+      "challengedUsers":
+      [ { "userId": "1234512345", "name": "",
+        "picture": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/avatar/avatar1.jpg",
+        "status": "", "submissionId": "" },
+        { "userId": "12345", "name": "",
+          "picture": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/avatar/avatar2.jpeg",
+          "status": "", "submissionId": "" },
+        { "userId": "12345", "name": "",
+          "picture": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/avatar/avatar3.jpg",
+          "status": "", "submissionId": "" } ],
+      "challengeTypeId": "",
+      "comment": "Extreme Ironing",
+      "videoURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/videos/extreme-ironing.mp4",
+      "captureURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/challenge/extreme-ironing.jpg"
+    },
+    {
+      "challengedUsers":
+      [ { "userId": "1234512345", "name": "",
+        "picture": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/avatar/avatar1.jpg",
+        "status": "", "submissionId": "" },
+        { "userId": "12345", "name": "",
+          "picture": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/avatar/avatar2.jpeg",
+          "status": "", "submissionId": "" },
+        { "userId": "12345", "name": "",
+          "picture": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/avatar/avatar3.jpg",
+          "status": "", "submissionId": "" } ],
+      "challengeTypeId": "",
+      "comment": "Plank Challenge",
+      "videoURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/videos/plank.mp4",
+      "captureURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/challenge/plank-challenge.jpg"
+    },
+    {
+      "challengedUsers":
+      [ { "userId": "1234512345", "name": "",
+        "picture": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/avatar/avatar1.jpg",
+        "status": "", "submissionId": "" },
+        { "userId": "12345", "name": "",
+          "picture": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/avatar/avatar2.jpeg",
+          "status": "", "submissionId": "" },
+        { "userId": "12345", "name": "",
+          "picture": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/avatar/avatar3.jpg",
+          "status": "", "submissionId": "" } ],
+      "challengeTypeId": "",
+      "comment": "Cinnamon Challenge",
+      "videoURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/videos/cinnamon-challenge.mp4",
+      "captureURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/challenge/cinamon-challenge.jpg"
+    }
+  ],
+
 
   "profileInfo": [{
-      "firstName":"Strangely",
-      "lastName":"Nibbles",
+      "firstName":"Lenny",
+      "lastName":"Bruce",
       "picture":"https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar1.jpg",
       "email":"Strangely@nibbles.com"
     },
-    { "firstName": "Kinda",
-      "lastName": "Koocky",
+    { "firstName": "David",
+      "lastName": "Henry",
       "picture": " https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar2.jpeg",
       "email": "KoockyAs@nibbled.com"
     },
-    { "firstName": "Strangely",
-      "lastName": "Nibbles",
+    { "firstName": "Lotte",
+      "lastName": "Nebula",
       "picture": " https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar3.jpg",
       "email": "Strangely@nibbles.com"
     },
@@ -85,5 +168,16 @@
     "totalChallenged": "0",
     "totalSubmitted": "0",
     "imageURL":""
+  },
+  "submissionDocument": {
+    "authorId": "",
+    "challengedUsers":
+    [ { "userId": "", "name": "", "picture": "", "status": "", "submissionId": "" },
+      { "userId": "", "name": "", "picture": "", "status": "", "submissionId": "" },
+      { "userId": "", "name": "", "picture": "", "status": "", "submissionId": "" } ],
+    "challengeTypeId": "",
+    "comment": "",
+    "videoURL": "",
+    "captureURL": ""
   }
 }
