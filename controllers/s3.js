@@ -1,5 +1,5 @@
 'use strict'
-const passport = require('koa-passport');
+
 const s3config = require('../AwsConfig.json');
 const AWS = require('aws-sdk');
 
