@@ -25,5 +25,26 @@
       "picture": " https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar5.png",
       "email": "Iva@nibbles.com"
     }
-  ]
+  ],
+  "userDocument": {
+    "fbToken": "",
+    "authToken": "",
+    "profileInfo": {
+      "fbId": "",
+      "firstName": "",
+      "lastName": "",
+      "picture": "",
+      "email": ""
+    }
+  },
+  "challengeDocument": {
+    "challengeId": "",
+    "creatorUserId": "",
+    "created_at": "",
+    "title":"",
+    "description":"",
+    "totalChallenged": "0",
+    "totalSubmitted": "0",
+    "imageURL":""
+  }
 }
