@@ -7,21 +7,22 @@ const submissionSchema = new mongoose.Schema ({
   "challengedUsers":
   [
     {
-      userId: { type: mongoose.Schema.ObjectId, ref:'User' },
+      userId: String,
       name: String,
       picture: String,
       status: String,
       submissionId: String
     },
     {
-      userId: { type: mongoose.Schema.ObjectId, ref:'User' },
+
+      userId: String,
       name: String,
       picture: String,
       status: String,
       submissionId: String
     },
     {
-      userId: { type: mongoose.Schema.ObjectId, ref:'User' },
+      userId: String,
       name: String,
       picture: String,
       status: String,

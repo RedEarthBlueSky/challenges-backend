@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const usersCtrl = require('./controllers/users.js');
 const submissionsCtrl = require('./controllers/submissions.js');
 const challengesCtrl = require('./controllers/challenges.js');
+const s3Ctrl = require('./controllers/s3.js');
 
 router.post('/sign-in/facebook', usersCtrl.login);
 router.get('/users/:notification', usersCtrl.notifications);
