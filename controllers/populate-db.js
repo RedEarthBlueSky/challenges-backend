@@ -1,4 +1,4 @@
-'use-strict';
+'use strict';
 
 const passport = require('koa-passport');
 const uuid = require('uuid');
@@ -35,7 +35,7 @@ let createChallengeDocument = function * (data, id) {
   challengeDocument.totalChallenged = data.totalChallenged;
   challengeDocument.totalSubmitted = data.totalSubmitted;
   challengeDocument.imageURL = data.imageURL;
-  newChallenge = new Challenge(challengeDocument);
+  let newChallenge = new Challenge(challengeDocument);
   yield newChallenge.save();
   console.log('New challenge has been created!');
 };
