@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 const submissionSchema = new mongoose.Schema ({
-  authorId: { type: String, ref:'User', required: true },  //  linked here
+  authorId: { type: mongoose.Schema.ObjectId, ref:'User'},  //  linked here
   "challengedUsers":
   [
     {

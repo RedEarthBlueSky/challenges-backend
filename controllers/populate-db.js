@@ -25,7 +25,7 @@ let createUserDocument = function * (data, authId) {
   console.log('New user has been created!');
 };
 
-let createChallengeDocument = (data, id) => {
+let createChallengeDocument = function * (data, id) {
   challengeDocument.challengeId = "" + (Math.floor(Math.random() * 900000) + 100000);
   //  this from the users collection
   challengeDocument.creatorUserId = id;
@@ -36,12 +36,12 @@ let createChallengeDocument = (data, id) => {
   challengeDocument.totalSubmitted = data.totalSubmitted;
   challengeDocument.imageURL = data.imageURL;
   newChallenge = new Challenge(challengeDocument);
-  newChallenge.save();
+  yield newChallenge.save();
   console.log('New challenge has been created!');
 };
 
-let createSubmissionDocument = (data, id) => {
-  // submissionDocument.authorId = authId;
+let createSubmissionDocument = function * (data, authorId, id) {
+  submissionDocument.authorId = authorId;
   submissionDocument.challengedUsers[0].userId = data.challengedUsers[0].userId;
   submissionDocument.challengedUsers[0].name = data.challengedUsers[0].name;
   submissionDocument.challengedUsers[0].picture = data.challengedUsers[0].picture;
@@ -61,35 +61,47 @@ let createSubmissionDocument = (data, id) => {
   submissionDocument.comment = data.comment;
   submissionDocument.videoURL = data.videoURL;
   submissionDocument.captureURL = data.captureURL;
+
+  submissionDocument.challengeTypeId = id;
+
   let newSubmission = new Submission(submissionDocument);
-  console.log(newSubmission);
   newSubmission.save();
   console.log('New submission has been created!');
 };
 
 exports.populateDb = function* (next) {
+  let users;
+  let challenges;
 
   let userArr = populateData.userProfileInfo;
   for (let i = 0; i < userArr.length; i++) {
     yield createUserDocument(userArr[i], uuid.v4());
   }
 
-  let challengesArr = populateData.challenges;
-  let users;
   try {
     users = yield User.find()
   } catch(err) {
     console.log('Error getting users *: ' + err);
   }
-  console.log(users);
+
+  let challengesArr = populateData.challenges;
   for (let i = 0; i < challengesArr.length; i++) {
      let id = users[i]._id;
-     createChallengeDocument(challengesArr[i], id);
+     yield createChallengeDocument(challengesArr[i], id);
   }
 
-  // let submissionsArr = populateData.submissions;
-  // for (let i = 0; i < profileInfoArr.length; i++) {
-  //   //  what is id?
-  //   // createSubmissionDocument(submissionsArr[i]);
-  // }
+  try {
+    challenges = yield Challenge.find();
+    console.log(challenges);
+  } catch(err) {
+    console.log('Error getting users *: ' + err);
+  }
+  console.log(challenges);
+
+  let submissionsArr = populateData.submissions;
+  for (let i = 0; i < submissionsArr.length; i++) {
+    let id = challenges[i]._id;
+    let authorId = challenges[i].creatorUserId;
+    yield createSubmissionDocument(submissionsArr[i], authorId, id);
+  }
 };
