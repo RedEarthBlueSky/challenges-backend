@@ -1,6 +1,35 @@
 {
+  "userProfileInfo": [{
+      "firstName":"Lenny",
+      "lastName":"Bruce",
+      "picture":"https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar1.jpg",
+      "email":"Strangely@nibbles.com"
+    },
+    { "firstName": "David",
+      "lastName": "Henry",
+      "picture": " https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar2.jpeg",
+      "email": "KoockyAs@nibbled.com"
+    },
+    { "firstName": "Lotte",
+      "lastName": "Nebula",
+      "picture": " https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar3.jpg",
+      "email": "Strangely@nibbles.com"
+    },
+    { "firstName": "Cranky",
+      "lastName": "Basildon",
+      "picture": " https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar4.jpg",
+      "email": "Cranky@nibbles.com"
+    },
+    { "firstName": "Iva",
+      "lastName": "Noclue",
+      "picture": " https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar5.png",
+      "email": "Iva@nibbles.com"
+    }
+  ],
+
   "challenges": [
     {
+      "_id": "58485ae0ab9ec363505dc0cf",
       "title": "Cinnamon Challenge",
       "description": "Partake of a tea spoon of Cinnamon",
       "totalChallenged": "0",
@@ -8,6 +37,7 @@
       "imageURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/challenge/cinamon-challenge.jpg"
     },
     {
+      "_id": "58485ae0ab9ec363505dc0d0",
       "title": "Extreme Ironing Challenge",
       "description": "Put the fun back into ironing in extreme locals",
       "totalChallenged": "0",
@@ -15,6 +45,7 @@
       "imageURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/challenge/extreme-ironing.jpg"
     },
     {
+      "_id": "58485ae0ab9ec363505dc0d1",
       "title": "Icebucket Challenge",
       "description": "The one that started it all",
       "totalChallenged": "0",
@@ -22,6 +53,7 @@
       "imageURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/challenge/icebucket-challenge.jpg"
     },
     {
+      "_id": "58485ae0ab9ec363505dc0d2",
       "title": "Public Planking Challenge",
       "description": "Be as creative and public with your planking as you can",
       "totalChallenged": "0",
@@ -29,6 +61,7 @@
       "imageURL": "https://s3.eu-central-1.amazonaws.com/codeworks-challenges/images/challenge/plank-challenge.jpg"
     },
     {
+      "_id": "58485ae0ab9ec363505dc0d3",
       "title": "Wrestle the Wildlife Challenge",
       "description": "A friendly bout of rough housing with your favorite fauna",
       "totalChallenged": "0",
@@ -120,34 +153,6 @@
     }
   ],
 
-
-  "profileInfo": [{
-      "firstName":"Lenny",
-      "lastName":"Bruce",
-      "picture":"https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar1.jpg",
-      "email":"Strangely@nibbles.com"
-    },
-    { "firstName": "David",
-      "lastName": "Henry",
-      "picture": " https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar2.jpeg",
-      "email": "KoockyAs@nibbled.com"
-    },
-    { "firstName": "Lotte",
-      "lastName": "Nebula",
-      "picture": " https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar3.jpg",
-      "email": "Strangely@nibbles.com"
-    },
-    { "firstName": "Cranky",
-      "lastName": "Basildon",
-      "picture": " https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar4.jpg",
-      "email": "Cranky@nibbles.com"
-    },
-    { "firstName": "Iva",
-      "lastName": "Noclue",
-      "picture": " https://codeworks-challenges.s3.amazonaws.com/images/avatar/avatar5.png",
-      "email": "Iva@nibbles.com"
-    }
-  ],
   "userDocument": {
     "fbToken": "",
     "authToken": "",

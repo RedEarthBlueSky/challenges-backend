@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 const submissionSchema = new mongoose.Schema ({
-  authorId: String, //|| { type: String, ref:'User', required: true },  //  linked here
+  authorId: { type: String, ref:'User', required: true },  //  linked here
   "challengedUsers":
   [
     {
@@ -29,7 +29,7 @@ const submissionSchema = new mongoose.Schema ({
       submissionId: String
     }
   ],
-  challengeTypeId: String, //{ type: mongoose.Schema.ObjectId, ref:'Challenge' },
+  challengeTypeId: { type: mongoose.Schema.ObjectId, ref:'Challenge' },
   comment: String,
   videoURL: String,
   captureURL: String,

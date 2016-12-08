@@ -8,14 +8,11 @@ const Challenge = require('../models').models.Challenge;
 const Submission = require('../models').models.Submission;
 const populateData = require('./data.json');
 
-
-//  grab the user, challenge and submission document config from the data.json file
 let userDocument = populateData.userDocument;
 let challengeDocument = populateData.challengeDocument;
 let submissionDocument = populateData.submissionDocument;
 
-//  define function to create the new user document
-let createUserDocument = (data, authId) => {
+let createUserDocument = function * (data, authId) {
   userDocument.fbToken = uuid.v4();
   userDocument.authToken = authId;
   userDocument.profileInfo.fbId = "" + (Math.floor(Math.random() * 900000) + 100000);
@@ -24,27 +21,27 @@ let createUserDocument = (data, authId) => {
   userDocument.profileInfo.picture = data.picture;
   userDocument.profileInfo.email = data.email;
   let newUser = new User(userDocument);
-  newUser.save();
+  yield newUser.save();
   console.log('New user has been created!');
 };
-//  define function to create the new challenge document
-let createChallengeDocument = (data, authId) => {
+
+let createChallengeDocument = (data, id) => {
   challengeDocument.challengeId = "" + (Math.floor(Math.random() * 900000) + 100000);
-  challengeDocument.creatorUserId = authId;
+  //  this from the users collection
+  challengeDocument.creatorUserId = id;
   challengeDocument.created_at = new Date();
   challengeDocument.title = data.title;
   challengeDocument.description = data.description;
   challengeDocument.totalChallenged = data.totalChallenged;
   challengeDocument.totalSubmitted = data.totalSubmitted;
   challengeDocument.imageURL = data.imageURL;
-  let newChallenge = new Challenge(challengeDocument);
-  console.log(newChallenge);
+  newChallenge = new Challenge(challengeDocument);
   newChallenge.save();
   console.log('New challenge has been created!');
 };
-//  define function to create the new submission document
-let createSubmissionDocument = (data, authId) => {
-  submissionDocument.authorId = authId;
+
+let createSubmissionDocument = (data, id) => {
+  // submissionDocument.authorId = authId;
   submissionDocument.challengedUsers[0].userId = data.challengedUsers[0].userId;
   submissionDocument.challengedUsers[0].name = data.challengedUsers[0].name;
   submissionDocument.challengedUsers[0].picture = data.challengedUsers[0].picture;
@@ -70,15 +67,29 @@ let createSubmissionDocument = (data, authId) => {
   console.log('New submission has been created!');
 };
 
-
 exports.populateDb = function* (next) {
-  let profileInfoArr = populateData.profileInfo;
-  let challengesArr = populateData.challenges;
-  let submissionsArr = populateData.submissions;
-  for (let i = 0; i < profileInfoArr.length; i++) {
-    let authId = uuid.v4();
-    createChallengeDocument(challengesArr[i], authId);
-    createUserDocument(profileInfoArr[i], authId);
-    createSubmissionDocument(submissionsArr[i], authId);
+
+  let userArr = populateData.userProfileInfo;
+  for (let i = 0; i < userArr.length; i++) {
+    yield createUserDocument(userArr[i], uuid.v4());
   }
+
+  let challengesArr = populateData.challenges;
+  let users;
+  try {
+    users = yield User.find()
+  } catch(err) {
+    console.log('Error getting users *: ' + err);
+  }
+  console.log(users);
+  for (let i = 0; i < challengesArr.length; i++) {
+     let id = users[i]._id;
+     createChallengeDocument(challengesArr[i], id);
+  }
+
+  // let submissionsArr = populateData.submissions;
+  // for (let i = 0; i < profileInfoArr.length; i++) {
+  //   //  what is id?
+  //   // createSubmissionDocument(submissionsArr[i]);
+  // }
 };

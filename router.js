@@ -12,10 +12,8 @@ const populateCtrl = require('./controllers/populate-db.js');
 router.post('/sign-in/facebook', usersCtrl.login);
 router.get('/users/:notification', usersCtrl.notifications);
 router.post('/me',usersCtrl.checkUser);
-// router.del('/me',usersCtrl.delUser);
 
 router.post('/submission', submissionsCtrl.postSubmission);
-// router.get('submissions/:feed', submissionsCtrl.getFeed);
 router.get('/submissions/:id', submissionsCtrl.getSpecificSubmission);
 router.get('/submissions/self', submissionsCtrl.getSelfSubmissions);
 router.get('/submissions/challenge/:id', submissionsCtrl.getLatestSubmissions);
@@ -23,7 +21,6 @@ router.get('/submissions/challenge/:id', submissionsCtrl.getLatestSubmissions);
 router.get('/challenges', challengesCtrl.getChallenges);
 router.post('/challenges', challengesCtrl.postChallenge);
 router.get('/challenges/:id', challengesCtrl.getSpecificChallenge);
-// router.get('/challenges/:popularity', challengesCtrl.mostPopularChallenge);
 
 router.post('/videos/upload', s3Ctrl.uploadFile);
 
