@@ -3,4 +3,3 @@ load-config.js
 node_modules/
 static/
 AwsConfig.json
-.gitignore

@@ -60,7 +60,6 @@ exports.login = function* (next) {
         ctx.body = serializeUser(user);
       }
       else {
-        // TODO: Fix if user is already in the database (it will give error)
         console.log('User is not in the database we need to create...');
         let newToken = uuid.v4();
         let newDocument = {

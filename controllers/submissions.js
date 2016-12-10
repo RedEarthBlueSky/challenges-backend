@@ -69,7 +69,7 @@ exports.postSubmission = function* (err, next) {
         try {
           let submission = yield Submission.findOne({_id: mySub._id});
           if (submission._id) {
-            ctx.status = 200;
+            ctx.status = 201;
             ctx.body = submission;
           }
         } catch (err) {
