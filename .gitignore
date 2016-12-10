@@ -1,4 +1,5 @@
-AwsConfig.json
 config.json
-controllers/load-config.js
+load-config.js
 node_modules/
+static/
+AwsConfig.json
